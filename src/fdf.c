@@ -6,7 +6,7 @@
 /*   By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/03 09:26:14 by aben-azz          #+#    #+#             */
-/*   Updated: 2019/02/06 10:27:37 by aben-azz         ###   ########.fr       */
+/*   Updated: 2019/02/06 11:15:47 by aben-azz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,5 @@ int		fdf(void)
 	mlx_hook(m.w, MCLICK, 0, evt_live_mouse_clicked, &m);
 	mlx_hook(m.w, MPRESS, 0, evt_live_mouse_pressed, &m);
 	mlx_loop(m.i);
-	printf("{%s}\n", mlx_col_name[0].color)
 	return (18);
 }
