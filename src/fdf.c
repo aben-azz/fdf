@@ -6,14 +6,13 @@
 /*   By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/03 09:26:14 by aben-azz          #+#    #+#             */
-/*   Updated: 2019/02/06 09:10:13 by aben-azz         ###   ########.fr       */
+/*   Updated: 2019/02/06 09:47:21 by aben-azz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/includes/libft.h"
 #include <stdio.h>
 #include "fdf.h"
-
 
 int		fdf(void)
 {

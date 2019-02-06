@@ -1,23 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_repeat_char.c                                   :+:      :+:    :+:   */
+/*   keys_one.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/26 14:06:20 by aben-azz          #+#    #+#             */
-/*   Updated: 2019/02/06 09:50:06 by aben-azz         ###   ########.fr       */
+/*   Created: 2019/02/06 09:44:54 by aben-azz          #+#    #+#             */
+/*   Updated: 2019/02/06 09:45:10 by aben-azz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "fdf.h"
 
-int	ft_repeat_char(char c, int n)
+int		key_up(t_mlx m)
 {
-	int p;
+	(void)m;
+	return (0);
+}
 
-	p = n;
-	while (--p + 1 > 0)
-		ft_putchar(c);
-	return (n);
+int		key_down(t_mlx m)
+{
+	(void)m;
+	return (0);
+}
+
+int		key_left(t_mlx m)
+{
+	(void)m;
+	return (0);
+}
+
+int		key_right(t_mlx m)
+{
+	(void)m;
+	return (0);
+}
+
+int		key_esc(t_mlx m)
+{
+	(void)m;
+	exit(0);
+	return (0);
 }
