@@ -6,7 +6,7 @@
 #    By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/03 09:24:41 by aben-azz          #+#    #+#              #
-#    Updated: 2019/02/06 04:30:49 by aben-azz         ###   ########.fr        #
+#    Updated: 2019/02/06 09:03:12 by aben-azz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,6 @@ _IBLUE			=	\x1b[44m
 _IPURPLE		=	\x1b[45m
 _ICYAN			=	\x1b[46m
 _IWHITE			=	\x1b[47m
-SRC_NAME		=	fdf.c main.c
 MSG				=	Compilation de FdF
 .PHONY: all, $(NAME), clean, fclean, re
 
@@ -47,7 +46,7 @@ LFT_PATH = ./libft/
 INC_PATH = ./
 SRC_PATH = ./src/
 
-SRC_NAME = fdf.c main.c
+SRC_NAME = fdf.c main.c events.c draw.c
 OBJ_NAME = $(SRC_NAME:.c=.o)
 INC_NAME = fdf.h
 
