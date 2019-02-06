@@ -6,7 +6,7 @@
 #    By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/13 13:11:49 by aben-azz          #+#    #+#              #
-#    Updated: 2019/01/30 00:52:19 by aben-azz         ###   ########.fr        #
+#    Updated: 2019/02/06 03:46:52 by aben-azz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,7 @@ _ICYAN			=	\x1b[46m
 _IWHITE			=	\x1b[47m
 INCLUDE			=	-Iincludes/
 CFLAGS			=	-Wall -Wextra -Werror
-MSG				=	Compilation de
+MSG				=	Compilation de la libft
 
 GCC				=	gcc $(CFLAGS) $(INCLUDE)
 

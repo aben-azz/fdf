@@ -6,7 +6,7 @@
 /*   By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/08 08:51:22 by aben-azz          #+#    #+#             */
-/*   Updated: 2019/02/03 10:44:13 by aben-azz         ###   ########.fr       */
+/*   Updated: 2019/02/06 06:14:04 by aben-azz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,11 @@
 /*
 ** gerer les fields negatives pour %scf
 */
-int		main(int argc, char **argv)
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
 {
-	(void)argc;
-	(void)argv;
 	fdf();
-	return (0);
+    return 0;
 }
