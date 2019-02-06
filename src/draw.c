@@ -6,7 +6,7 @@
 /*   By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/06 08:57:11 by aben-azz          #+#    #+#             */
-/*   Updated: 2019/02/06 09:02:09 by aben-azz         ###   ########.fr       */
+/*   Updated: 2019/02/06 11:48:07 by aben-azz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		string(t_mlx m, t_xy i, int color, char *string)
 	return (1);
 }
 
-void	ligne(t_mlx m, t_xy o, t_xy f)
+void	ligne(t_mlx m, t_xy o, t_xy f, int color)
 {
 	int		i;
 	t_xy	inc;
@@ -33,21 +33,21 @@ void	ligne(t_mlx m, t_xy o, t_xy f)
 	f = (t_xy){.x = f.x - o.x, .y =f.y - o.y};
 	inc = (t_xy){.x = (f.x > 0) ? 1 : -1, .y = (f.y > 0) ? 1 : -1};
 	f = (t_xy){.x = abs(f.x), .y = abs(f.y)};
-	p(m, o, 0x00FF00) && (i = 1);
+	p(m, o, color) && (i = 1);
 	var = ft_round((f.x > f.y ? f.x : f.y) / 2, 0);
 	if (f.x > f.y)
 		while (i++ <= f.x && (o.x += inc.x) && (var += f.y))
 		{
 			(var >= f.x) && (var -= f.x);
 			(var >= f.x) && (o.y += inc.y);
-			p(m, o, 0x00FF00);
+			p(m, o, color);
 		}
 	else
 		while (i++ <= f.y && (o.y += inc.y) && (var += f.x))
 		{
 			(var >= f.y) && (o.x += inc.x);
 			(var >= f.y) && (var -= f.y);
-			p(m, o, 0x00FF00);
+			p(m, o, color);
 		}
 }
 

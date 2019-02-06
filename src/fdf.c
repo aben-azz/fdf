@@ -6,13 +6,14 @@
 /*   By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/03 09:26:14 by aben-azz          #+#    #+#             */
-/*   Updated: 2019/02/06 11:15:47 by aben-azz         ###   ########.fr       */
+/*   Updated: 2019/02/06 11:25:48 by aben-azz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/includes/libft.h"
 #include <stdio.h>
 #include "fdf.h"
+
 
 int clear(t_mlx m)
 {

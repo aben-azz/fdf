@@ -6,7 +6,7 @@
 /*   By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/03 09:25:27 by aben-azz          #+#    #+#             */
-/*   Updated: 2019/02/06 11:15:38 by aben-azz         ###   ########.fr       */
+/*   Updated: 2019/02/06 11:45:32 by aben-azz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -795,7 +795,7 @@ typedef struct	s_key
 }				t_key;
 int				p(t_mlx m, t_xy i, int color);
 int				string(t_mlx m, t_xy i, int color, char *string);
-void			ligne(t_mlx m, t_xy o, t_xy f);
+void			ligne(t_mlx m, t_xy o, t_xy f, int color);
 void			circle_points(t_mlx m, t_xy c, t_xy o, int color);
 void			circle_midpoint(t_mlx m, t_xy c, int radius, int color);
 int				evt_live_mouse_clicked(int x, int y, int z, t_mlx *m);
