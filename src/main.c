@@ -6,7 +6,7 @@
 /*   By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/08 08:51:22 by aben-azz          #+#    #+#             */
-/*   Updated: 2019/02/06 12:19:28 by aben-azz         ###   ########.fr       */
+/*   Updated: 2019/02/06 13:30:53 by aben-azz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,11 @@ int	to(int o[11][40], t_mlx m)
 	int x = 500;
 	int y = 100;
 	//int multi = 10;
-	int x_offset = 5;
+	//int x_offset = 5;
 	int y_offset = 10;
 	int i = 0;
-	while (i < 11)
-	{
-		printf("xd: %d => de %d a %d \n", i, y + (i * y_offset),  x + (y_offset * 40));
+	while (i++ < 11)
 		ligne(m, (t_xy){.x = x, .y = y + (i * y_offset)}, (t_xy){.x = x + (y_offset * 40), .y = y}, RED4);
-		//y += y_offset;
-		i++;
-	}
 	i = 0;
 	return (0);
 }
@@ -54,11 +49,7 @@ int		main(int ac, char **av)
 {
 	(void)ac;
 	(void)av;
-	t_mlx m;
-	m.i = mlx_init();
-	m.w = mlx_new_window(m.i, 2000, 2000, "GROS DELIRES");
-	clear(m);
-	call(m);
-	mlx_loop(m.i);
+	//clear(m);
+	fdf();
 	return (0);
 }

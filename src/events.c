@@ -6,7 +6,7 @@
 /*   By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/06 08:58:10 by aben-azz          #+#    #+#             */
-/*   Updated: 2019/02/06 10:23:43 by aben-azz         ###   ########.fr       */
+/*   Updated: 2019/02/06 13:39:45 by aben-azz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,11 @@ int		evt_live_key_pressed(int key, t_mlx *m)
 	int i;
 
 	i = -1;
+	clear(*m);
+
 	while (g_key[++i].key)
 		if (g_key[i].key == key)
 			g_key[i].function && g_key[i].function(*m);
-	clear(*m);
 	if (SHOW_LIVE_KEY)
 	{
 		string(*m, (t_xy){.x = g_mouse.x + 40, .y = g_mouse.y}, 0x00FF00,
