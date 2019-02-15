@@ -6,7 +6,7 @@
 /*   By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/03 09:25:27 by aben-azz          #+#    #+#             */
-/*   Updated: 2019/02/14 01:48:41 by aben-azz         ###   ########.fr       */
+/*   Updated: 2019/02/15 09:43:37 by aben-azz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "libft/includes/libft.h"
 # include <stdio.h>
 # include <stdlib.h>
-
+# include <math.h>
 # define KPRESS 2
 # define KCLICK	3
 # define MCLICK	4
@@ -812,4 +812,5 @@ int				key_right(t_mlx m);
 int				key_esc(t_mlx m);
 int				clear(t_mlx m);
 int				menu(t_mlx m);
+t_point			*rotate(t_point a, t_point b, double angle);
 #endif

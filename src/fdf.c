@@ -6,7 +6,7 @@
 /*   By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/03 09:26:14 by aben-azz          #+#    #+#             */
-/*   Updated: 2019/02/15 09:32:40 by aben-azz         ###   ########.fr       */
+/*   Updated: 2019/02/15 09:49:50 by aben-azz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,15 @@ int menu(t_mlx m)
 	//fill_rect(m, (t_point){.x = 300, .y = 300}, (t_point){.x = 60, .y  = 20}, PURPLE1);
 	fill_rect(m, (t_point){.x = 0, .y = 0}, (t_point){.x = 2000, .y  = 300}, BLUE2);
 	circle_midpoint(m, (t_point){.x = 200, .y = 800 - 100}, 70, GREEN);
+	t_point depart = {.x = 200, .y = 800-100-70};
+	t_point destination = {.x = 200, .y = 800-100};
+	ligne(m, depart, destination, RED4);
+	double angle = 45.0;
+	t_point *retour = rotate(depart, destination, angle);
+	double angle_ = -45.0;
+	t_point *retour_ = rotate(depart, destination, angle_);
+	ligne(m, retour[0], retour[1], RED4);
+	ligne(m, retour_[0], retour_[1], RED4);
 	return (0);
 }
 
