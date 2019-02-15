@@ -6,12 +6,14 @@
 /*   By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/06 08:57:11 by aben-azz          #+#    #+#             */
-/*   Updated: 2019/02/14 01:51:24 by aben-azz         ###   ########.fr       */
+/*   Updated: 2019/02/15 21:28:45 by aben-azz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
+void name(/* arguments */) {
+	/* code */
+}
 int		p(t_mlx m, t_point i, int color)
 {
 	mlx_pixel_put(m.i, m.w, i.x, i.y, color);
