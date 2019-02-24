@@ -6,7 +6,7 @@
 /*   By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/03 09:26:14 by aben-azz          #+#    #+#             */
-/*   Updated: 2019/02/23 23:32:27 by aben-azz         ###   ########.fr       */
+/*   Updated: 2019/02/24 02:01:06 by aben-azz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 
 int rect(t_mlx m, t_point from, t_point l, int color)
 {
-
 	ligne(m, (t_point){.x = from.x + l.x, .y = from.y},
 		(t_point){.x = from.x + l.x, .y =from.y + l.y}, color);
 	ligne(m, (t_point){.x = from.x, .y = from.y},
