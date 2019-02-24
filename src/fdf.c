@@ -6,7 +6,7 @@
 /*   By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/03 09:26:14 by aben-azz          #+#    #+#             */
-/*   Updated: 2019/02/15 21:28:49 by aben-azz         ###   ########.fr       */
+/*   Updated: 2019/02/23 23:32:27 by aben-azz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,37 +51,13 @@ int clear(t_mlx m)
 	return (menu(m));
 }
 
+
 int menu(t_mlx m)
 {
 	(void)m;
 	//rect(m, (t_point){.x = 300, .y = 300}, (t_point){.x = 60, .y  = 20}, PURPLE1);
 	//fill_rect(m, (t_point){.x = 300, .y = 300}, (t_point){.x = 60, .y  = 20}, PURPLE1);
-	fill_rect(m, (t_point){.x = 0, .y = 0}, (t_point){.x = 2000, .y  = 300}, BLUE2);
+	//fill_rect(m, (t_point){.x = 0, .y = 0}, (t_point){.x = 2000, .y  = 300}, BLUE2);
 	circle_midpoint(m, (t_point){.x = 200, .y = 800 - 100}, 70, GREEN);
-	t_point depart = {.x = 200, .y = 800-100-70};
-	t_point destination = {.x = 200, .y = 800-100};
-	ligne(m, depart, destination, RED4);
-	double angle = 45.0;
-	t_point *retour = rotate(depart, destination, angle);
-	double angle_ = -45.0;
-	t_point *retour_ = rotate(depart, destination, angle_);
-	ligne(m, retour[0], retour[1], RED4);
-	ligne(m, retour_[0], retour_[1], RED4);
 	return (0);
-}
-
-int		fdf(void)
-{
-	t_mlx m;
-	m.i = mlx_init();
-	m.w = mlx_new_window(m.i, 2000, 800, "GROS DELIRES");
-	clear(m);
-	mlx_hook(m.w, KPRESS, 0, evt_live_key_pressed, &m);
-	mlx_hook(m.w, KCLICK, 0, evt_live_key_clicked, &m);
-	mlx_hook(m.w, MMOVE, 0, evt_live_mouse_move, &m);
-	mlx_hook(m.w, MCLICK, 0, evt_live_mouse_clicked, &m);
-	mlx_hook(m.w, MPRESS, 0, evt_live_mouse_pressed, &m);
-	menu(m);
-	mlx_loop(m.i);
-	return (18);
 }

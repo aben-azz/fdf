@@ -6,18 +6,21 @@
 /*   By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/06 08:57:11 by aben-azz          #+#    #+#             */
-/*   Updated: 2019/02/15 21:28:45 by aben-azz         ###   ########.fr       */
+/*   Updated: 2019/02/24 01:40:39 by aben-azz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-void name(/* arguments */) {
-	/* code */
-}
+
 int		p(t_mlx m, t_point i, int color)
 {
 	mlx_pixel_put(m.i, m.w, i.x, i.y, color);
 	return (1);
+}
+
+int		rgb2dec(int red, int green, int blue)
+{
+	return ((red << 16) + (green << 8) + (blue));
 }
 
 int		string(t_mlx m, t_point i, int color, char *string)
@@ -40,8 +43,8 @@ void	ligne(t_mlx m, t_point o, t_point f, int color)
 	if (f.x > f.y)
 		while (i++ <= f.x && (o.x += inc.x) && (var += f.y))
 		{
-			(var >= f.x) && (var -= f.x);
 			(var >= f.x) && (o.y += inc.y);
+			(var >= f.x) && (var -= f.x);
 			p(m, o, color);
 		}
 	else
