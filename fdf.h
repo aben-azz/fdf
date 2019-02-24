@@ -6,7 +6,7 @@
 /*   By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/03 09:25:27 by aben-azz          #+#    #+#             */
-/*   Updated: 2019/02/24 01:42:05 by aben-azz         ###   ########.fr       */
+/*   Updated: 2019/02/24 01:50:35 by aben-azz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int				string(t_mlx m, t_point i, int color, char *string);
 void			ligne(t_mlx m, t_point o, t_point f, int color);
 void			circle_points(t_mlx m, t_point c, t_point o, int color);
 void			circle_midpoint(t_mlx m, t_point c, int radius, int color);
-int				evt_live_mouse_clicked(int x, int y, int z, t_fdf *f);
+int				evt_live_mouse_clicked(int x, int y, int z, t_mlx *m);
 int				evt_live_key_pressed(int key, t_mlx *m);
 int				evt_live_key_clicked(int key, t_mlx *m);
 int				evt_live_mouse_move(int x, int y, t_mlx *m);
