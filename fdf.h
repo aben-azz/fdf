@@ -6,7 +6,7 @@
 /*   By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/03 09:25:27 by aben-azz          #+#    #+#             */
-/*   Updated: 2019/03/07 07:52:50 by aben-azz         ###   ########.fr       */
+/*   Updated: 2019/03/07 08:54:17 by aben-azz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ typedef struct	s_mlx
 	int				altitude;
 	int				iso;
 	int				color;
-	t_point			(*function)(struct s_mlx *fdf, t_point p, int z);
+	int				is_pressed;
+	int				is_ok;
 }				t_mlx;
 int				check_line(char *str, int fd);
 int				create_list(int fd, t_list **begin);
@@ -108,5 +109,5 @@ void			put_borders(t_mlx *fdf);
 t_point			isometricalize(t_mlx *fdf, t_point p, int z);
 t_point			parallelize(t_mlx *fdf, t_point p, int z);
 
-void			put_rainbow(t_mlx *fdf, int x, int y);
+void			put_rainbow(t_mlx *fdf, int x, int y, int focus);
 #endif

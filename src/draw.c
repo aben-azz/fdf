@@ -6,7 +6,7 @@
 /*   By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/06 08:57:11 by aben-azz          #+#    #+#             */
-/*   Updated: 2019/03/07 07:59:03 by aben-azz         ###   ########.fr       */
+/*   Updated: 2019/03/07 08:42:48 by aben-azz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,27 @@
 
 void		put_legend(t_mlx *fdf)
 {
-	mlx_string_put(fdf->mlx, fdf->win, DRAW_W + 10, 10, WHITE,
-	"1 or +                - increase altitude");
-	mlx_string_put(fdf->mlx, fdf->win, DRAW_W + 10, 50, WHITE,
-	"2 or -                - decrease altitude");
-	mlx_string_put(fdf->mlx, fdf->win, DRAW_W + 10, 90, WHITE,
-	"scroll up             - zoom");
-	mlx_string_put(fdf->mlx, fdf->win, DRAW_W + 10, 130, WHITE,
-	"scroll down           - decrease altitude");
-	mlx_string_put(fdf->mlx, fdf->win, DRAW_W + 10, 170, WHITE,
-	"Q  or space           - change projection");
-	mlx_string_put(fdf->mlx, fdf->win, DRAW_W + 10, 210, WHITE,
-	"R                     - reset to default values");
-	mlx_string_put(fdf->mlx, fdf->win, DRAW_W + 10, 250, WHITE,
-	"left arrow or A       - move left");
-	mlx_string_put(fdf->mlx, fdf->win, DRAW_W + 10, 290, WHITE,
-	"right arrow or D      - move right");
-	mlx_string_put(fdf->mlx, fdf->win, DRAW_W + 10, 330, WHITE,
-	"up arrow or W         - move up");
-	mlx_string_put(fdf->mlx, fdf->win, DRAW_W + 10, 370, WHITE,
-	"down arrow or S       - move down");
-	mlx_string_put(fdf->mlx, fdf->win, DRAW_W + 10, 410, WHITE,
-	"left click on color   - low altitude color");
-	mlx_string_put(fdf->mlx, fdf->win, DRAW_W + 10, 450, WHITE,
-	"right click on color  - high altitude color");
+	int i;
+
+	i = 10;
+	mlx_string_put(fdf->mlx, fdf->win, DRAW_W + 10, i += 100, WHITE,
+	"(Lshift/Rshift) + scroll  - change altitude");
+	mlx_string_put(fdf->mlx, fdf->win, DRAW_W + 10, i += 100, WHITE,
+	"scroll                    - zoom");
+	mlx_string_put(fdf->mlx, fdf->win, DRAW_W + 10, i += 100, WHITE,
+	"scroll click              - toggle projection");
+	mlx_string_put(fdf->mlx, fdf->win, DRAW_W + 10, i += 100, WHITE,
+	"Space                     - reset values");
+	mlx_string_put(fdf->mlx, fdf->win, DRAW_W + 10, i += 100, WHITE,
+	"left arrow or A           - move left");
+	mlx_string_put(fdf->mlx, fdf->win, DRAW_W + 10, i += 100, WHITE,
+	"right arrow or D          - move right");
+	mlx_string_put(fdf->mlx, fdf->win, DRAW_W + 10, i += 100, WHITE,
+	"up arrow or W             - move up");
+	mlx_string_put(fdf->mlx, fdf->win, DRAW_W + 10, i += 100, WHITE,
+	"down arrow or S           - move down");
 }
+
 int				put_pixel_img(t_mlx *fdf, t_point p, int couleur)
 {
 	int offset;
@@ -53,7 +49,6 @@ int				put_pixel_img(t_mlx *fdf, t_point p, int couleur)
 
 void		create_image(t_mlx *fdf)
 {
-
 	if (!(fdf->img = (t_image *)malloc(sizeof(t_image))))
 		exit(1);
 	fdf->img->ptr = mlx_new_image(fdf->mlx, WIN_W, WIN_H);
@@ -71,7 +66,7 @@ void			process(t_mlx *fdf)
 		mlx_destroy_image(fdf->mlx, fdf->img->ptr);
 	create_image(fdf);
 	draw(fdf);
-	put_rainbow(fdf, 0, 0);
+	put_rainbow(fdf, 0, 0, 1);
 	mlx_put_image_to_window(fdf->mlx, fdf->win, fdf->img->ptr, 0, 0);
 	put_legend(fdf);
 }
@@ -119,6 +114,7 @@ void		put_ver(t_mlx *fdf, t_points p, t_point d, int color)
 void			put_line(t_mlx *fdf, t_points p, int offset, int color)
 {
 	t_point d;
+
 	d = (t_point){p.p2.x - p.p1.x, p.p2.y - p.p1.y};
 	d = (t_point){abs(d.x), abs(d.y)};
 	p.p1.x += (offset ? fdf->xoffset : 0);

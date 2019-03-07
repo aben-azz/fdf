@@ -6,44 +6,28 @@
 /*   By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/08 08:51:22 by aben-azz          #+#    #+#             */
-/*   Updated: 2019/03/07 08:14:51 by aben-azz         ###   ########.fr       */
+/*   Updated: 2019/03/07 08:54:25 by aben-azz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include <stdio.h>
 
-t_point		isometricalize(t_mlx *fdf, t_point p, int z)
-{
-	(void)fdf;
-	double cte1;
-	double cte2;
-
-	cte1 = 0.5;
-	cte2 = 0.5;
-
-	z *= fdf->altitude;
-	fdf->zoom = ft_max(fdf->zoom, 1);
-	//p.x = fdf->xoffset + (p.x * fdf->zoom);
-	p.x = (p.x * fdf->zoom);
-	p.y = (p.y * fdf->zoom);
-	//p.y = fdf->yoffset + (p.y * fdf->zoom);
-	p.x = (cte1 * p.x - cte2 * p.y);
-	p.y = (-z + (cte1 / 2.0) * p.x + (cte2 / 2.0) * p.y);
-	return (p);
-}
-
-t_point		parallelize(t_mlx *fdf, t_point p, int z)
+t_point		rasterise(t_mlx *fdf, t_point p, int z)
 {
 	double cte;
+	double cte2;
 
+	(void)cte2;
 	cte = 0.5;
-	//fdf->zoom = fdf->zoom < 0 ? 0 : fdf->zoom;
+	cte2 = 0.5;
+	z *= fdf->altitude;
+	fdf->zoom = ft_max(fdf->zoom, 1);
 	p.x = (p.x * fdf->zoom);
 	p.y = (p.y * fdf->zoom);
-	z *= fdf->altitude;
-	p.x = p.x + cte * z;
-	p.y = p.y + (cte / 2.0) * z;
+	p.x = (double[2]){p.x + cte * z, cte * p.x - cte2 * p.y}[fdf->iso];
+	p.y = (double[2]){p.y + (cte / 2.0) * z,
+		-z + (cte / 2.0) * p.x + (cte2 / 2.0) * p.y}[fdf->iso];
 	return (p);
 }
 
@@ -71,16 +55,15 @@ void		draw(t_mlx *fdf)
 		{
 			p1 = (t_point){i, j};
 			p2 = (t_point){i == fdf->map->x - 1 ? i : i + 1, j};
-			p1 = fdf->function(fdf, p1, fdf->map->board[p1.y][p1.x]);
-			p2 = fdf->function(fdf, p2, fdf->map->board[p2.y][p2.x]);
+			p1 = rasterise(fdf, p1, fdf->map->board[p1.y][p1.x]);
+			p2 = rasterise(fdf, p2, fdf->map->board[p2.y][p2.x]);
 			put_line(fdf, (t_points){p1, p2}, 1, fdf->color);
 			p2 = (t_point){i, j == fdf->map->y - 1 ? j : j + 1};
-			p2 = fdf->function(fdf, p2, fdf->map->board[p2.y][p2.x]);
+			p2 = rasterise(fdf, p2, fdf->map->board[p2.y][p2.x]);
 			put_line(fdf, (t_points){p1, p2}, 1,fdf->color);
 			i++;
 		}
 	put_borders(fdf);
-
 }
 void	print_map(t_map *map)
 {
@@ -100,6 +83,7 @@ void	print_map(t_map *map)
 		j++;
 	}
 }
+
 t_mlx	*init(int fd)
 {
 	t_mlx	*fdf;
@@ -124,10 +108,11 @@ t_mlx	*init(int fd)
 	fdf->is_border = 0;
 	fdf->is_shift = 0;
 	fdf->altitude = 1;
-	fdf->iso = 0;
-	fdf->function = isometricalize;
+	fdf->iso = 1;
+	fdf->is_ok = 0;
 	fdf->color = (int[4]){RED1, YELLOW, GREEN3,
 			BLUE_VIOLET}[ft_max((unsigned int)(&fdf->mlx)/200 % 4, 0)];
+	fdf->is_pressed = 0;
 	return (fdf);
 }
 
