@@ -6,7 +6,7 @@
 /*   By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/06 08:58:10 by aben-azz          #+#    #+#             */
-/*   Updated: 2019/03/07 06:48:22 by aben-azz         ###   ########.fr       */
+/*   Updated: 2019/03/07 07:12:03 by aben-azz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int		evt_live_key_pressed(int key, t_mlx *m)
 		m->yoffset += 5;
 	else if (key == LSFT_KEY)
 		m->is_shift = 1;
-
 	process(m);
 	return (0);
 }
@@ -70,19 +69,25 @@ int		evt_live_mouse_clicked(int x, int y, int z, t_mlx *m)
 	if (m->is_shift)
 	{
 		if (x == 6)
-			m->altitude ++;
+			m->altitude++;
 
 		else if (x == 7)
-			m->altitude --;
+			m->altitude--;
 
 	}
 	else
 	{
-		ft_printf("x vaut sans shift : %d\n", x);
 		if (x == WHEELUP)
 			m->zoom += 5;
 		else if (x == WHEELDOWN)
 			m->zoom -= 5;
+		else if (x == BUT3_KEY)
+		{
+			if ((m->iso = !m->iso))
+				m->function = isometricalize;
+			else
+				m->function = parallelize;
+		}
 	}
 	process(m);
 	//ft_printf("x: %d\n", x);

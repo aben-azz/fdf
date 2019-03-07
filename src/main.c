@@ -6,14 +6,14 @@
 /*   By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/08 08:51:22 by aben-azz          #+#    #+#             */
-/*   Updated: 2019/03/07 06:48:25 by aben-azz         ###   ########.fr       */
+/*   Updated: 2019/03/07 07:11:53 by aben-azz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include <stdio.h>
 
-t_point		rasterise(t_mlx *fdf, t_point p, int z)
+t_point		isometricalize(t_mlx *fdf, t_point p, int z)
 {
 	(void)fdf;
 	double cte1;
@@ -29,6 +29,20 @@ t_point		rasterise(t_mlx *fdf, t_point p, int z)
 	//p.y = fdf->yoffset + (p.y * fdf->zoom);
 	p.x = (cte1 * p.x - cte2 * p.y);
 	p.y = (-z + (cte1 / 2.0) * p.x + (cte2 / 2.0) * p.y);
+	return (p);
+}
+
+t_point		parallelize(t_mlx *fdf, t_point p, int z)
+{
+	double cte;
+
+	cte = 0.5;
+	//fdf->zoom = fdf->zoom < 0 ? 0 : fdf->zoom;
+	p.x = (p.x * fdf->zoom);
+	p.y = (p.y * fdf->zoom);
+	z *= fdf->altitude;
+	p.x = p.x + cte * z;
+	p.y = p.y + (cte / 2.0) * z;
 	return (p);
 }
 
@@ -57,11 +71,11 @@ void		draw(t_mlx *fdf)
 		{
 			p1 = (t_point){i, j};
 			p2 = (t_point){i == fdf->map->x - 1 ? i : i + 1, j};
-			p1 = rasterise(fdf, p1, fdf->map->board[p1.y][p1.x]);
-			p2 = rasterise(fdf, p2, fdf->map->board[p2.y][p2.x]);
+			p1 = fdf->function(fdf, p1, fdf->map->board[p1.y][p1.x]);
+			p2 = fdf->function(fdf, p2, fdf->map->board[p2.y][p2.x]);
 			put_line(fdf, p1, p2, 1);
 			p2 = (t_point){i, j == fdf->map->y - 1 ? j : j + 1};
-			p2 = rasterise(fdf, p2, fdf->map->board[p2.y][p2.x]);
+			p2 = fdf->function(fdf, p2, fdf->map->board[p2.y][p2.x]);
 			put_line(fdf, p1, p2, 1);
 			i++;
 		}
@@ -109,6 +123,8 @@ t_mlx	*init(int fd)
 	fdf->is_border = 0;
 	fdf->is_shift = 0;
 	fdf->altitude = 1;
+	fdf->iso = 0;
+	fdf->function = isometricalize;
 	return (fdf);
 }
 
