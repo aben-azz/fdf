@@ -6,7 +6,7 @@
 /*   By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/06 08:57:11 by aben-azz          #+#    #+#             */
-/*   Updated: 2019/03/07 05:20:44 by aben-azz         ###   ########.fr       */
+/*   Updated: 2019/03/07 06:48:23 by aben-azz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ int				put_pixel_img(t_mlx *fdf, t_point p)
 	int offset;
 	int color;
 
-	offset = ((p.x + p.y * WIN_WIDTH) * fdf->img->bpp);
+	offset = ((p.x + p.y * WIN_W) * fdf->img->bpp);
 	color = mlx_get_color_value(fdf->mlx, RED1);
-	if ((p.x < DRAW_WIDTH && p.x > 0 && p.y < DRAW_HEIGHT && p.y > 0))
+	if (fdf->is_border || (p.x < DRAW_W && p.x > 0 && p.y < WIN_H && p.y > 0))
 		*(int *)(fdf->img->data + offset) = color;
 	return (1);
 }
@@ -35,7 +35,7 @@ void		create_image(t_mlx *fdf)
 
 	if (!(fdf->img = (t_image *)malloc(sizeof(t_image))))
 		exit(1);
-	fdf->img->ptr = mlx_new_image(fdf->mlx, WIN_WIDTH, WIN_HEIGHT);
+	fdf->img->ptr = mlx_new_image(fdf->mlx, WIN_W, WIN_H);
 	if (!(fdf->img->ptr))
 		exit(1);
 	fdf->img->data = mlx_get_data_addr(fdf->img->ptr,
@@ -45,7 +45,6 @@ void		create_image(t_mlx *fdf)
 
 void			process(t_mlx *fdf)
 {
-
 	mlx_clear_window(fdf->mlx, fdf->win);
 	if (fdf->img)
 		mlx_destroy_image(fdf->mlx, fdf->img->ptr);
@@ -94,12 +93,15 @@ void		put_ver(t_mlx *fdf, t_point p1, t_point p2, t_point d)
 	}
 }
 
-void			put_line(t_mlx *fdf, t_point p1, t_point p2)
+void			put_line(t_mlx *fdf, t_point p1, t_point p2, int offset)
 {
 	t_point d;
-
 	d = (t_point){p2.x - p1.x, p2.y - p1.y};
 	d = (t_point){abs(d.x), abs(d.y)};
+	p1.x += (offset ? fdf->xoffset : 0);
+	p1.y += (offset ? fdf->yoffset : 0);
+	p2.x += (offset ? fdf->xoffset : 0);
+	p2.y += (offset ? fdf->yoffset : 0);
 	(put_pixel_img(fdf, p1));
 	if (d.x > d.y)
 		put_hor(fdf, p1, p2, d);
