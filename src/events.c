@@ -6,7 +6,7 @@
 /*   By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/06 08:58:10 by aben-azz          #+#    #+#             */
-/*   Updated: 2019/03/07 07:12:03 by aben-azz         ###   ########.fr       */
+/*   Updated: 2019/03/07 08:01:13 by aben-azz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int		evt_live_mouse_move(int x, int y, t_mlx *m)
 	(void)x;
 	(void)y;
 	(void)m;
+
 	return (0);
 }
 
@@ -46,7 +47,10 @@ int		evt_live_key_pressed(int key, t_mlx *m)
 	process(m);
 	return (0);
 }
-
+unsigned long rgb2dec(int r, int g, int b)
+{
+	return ((r & 0xff) << 16) + ((g & 0xff) << 8) + (b & 0xff);
+}
 int		evt_live_key_released(int key, t_mlx *m)
 {
 	(void)m;
@@ -56,12 +60,39 @@ int		evt_live_key_released(int key, t_mlx *m)
 	process(m);
 	return (0);
 }
+void		put_rainbow(t_mlx *fdf, int x, int y)
+{
+	int i;
+	int color[3];
 
+	i = 0;
+	color[0] = 255;
+	color[1] = 0;
+	color[2] = 0;
+	while (i++ < 499)
+	{
+		(color[1] == 0 && color[0] == 255) && (color[2] += 5);
+		(color[1] == 255 && color[0] == 0) && (color[2] -= 5);
+		(color[1] == 0 && color[2] == 255) && (color[0] -= 5);
+		(color[1] == 255 && color[2] == 0) && (color[0] += 5);
+		(color[0] == 0 && color[2] == 255) && (color[1] += 5);
+		(color[0] == 255 && color[2] == 0) && (color[1] -= 5);
+		if (i == x - 2000 && (y >= 1475 && y <= 1495))
+			fdf->color = rgb2dec(color[0], color[2], color[1]);
+
+			// circle_midpoint(*m, (t_point){.x = 300 + i, .y = 305}, 10,
+			// 	rgb2dec(color[0], color[2], color[1]));
+		// rect(*m, (t_point){300 + i, 300}, (t_point){1, 10},
+		// 	rgb2dec(color[0], color[2], color[1]));
+		fdf->is_border = 1;
+		put_line(fdf, (t_points){(t_point){2000 + i, 1475}, (t_point){2000 + i,
+			1495}}, 0, rgb2dec(color[0], color[2], color[1]));
+		fdf->is_border = 0;
+	}
+}
 int		evt_live_mouse_clicked(int x, int y, int z, t_mlx *m)
 {
-	// int i;
-	// int color[3];
-	//
+
 	(void)y;
 	(void)z;
 	(void)m;
@@ -90,26 +121,6 @@ int		evt_live_mouse_clicked(int x, int y, int z, t_mlx *m)
 		}
 	}
 	process(m);
-	//ft_printf("x: %d\n", x);
-	// i = 0;
-	// color[0] = 255;
-	// color[1] = 0;
-	// color[2] = 0;
-	// clear(*m);
-	// while (i++ < 300)
-	// {
-	// 	(color[1] == 0 && color[0] == 255) && (color[2] += 5);
-	// 	(color[1] == 255 && color[0] == 0) && (color[2] -= 5);
-	// 	(color[1] == 0 && color[2] == 255) && (color[0] -= 5);
-	// 	(color[1] == 255 && color[2] == 0) && (color[0] += 5);
-	// 	(color[0] == 0 && color[2] == 255) && (color[1] += 5);
-	// 	(color[0] == 255 && color[2] == 0) && (color[1] -= 5);
-	// 	if (i == y - 300 && (z >= 300 && z <= 310))
-	// 		circle_midpoint(*m, (t_point){.x = 300 + i, .y = 305}, 10,
-	// 			rgb2dec(color[0], color[2], color[1]));
-	// 	rect(*m, (t_point){.x = 300 + i, .y = 300}, (t_point){.x = 1, .y = 10},
-	// 		rgb2dec(color[0], color[2], color[1]));
-	// }
 	return (0);
 }
 
@@ -122,6 +133,8 @@ int		evt_live_mouse_pressed(int x, int y, int z, t_mlx *m)
 		m->zoom++;
 	else if (x == WHEELDOWN)
 		m->zoom--;
+	//process(m);
+	put_rainbow(m, y, z);
 	process(m);
 	return (0);
 }

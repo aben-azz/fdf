@@ -6,7 +6,7 @@
 /*   By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/08 08:51:22 by aben-azz          #+#    #+#             */
-/*   Updated: 2019/03/07 07:11:53 by aben-azz         ###   ########.fr       */
+/*   Updated: 2019/03/07 08:14:51 by aben-azz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_point		isometricalize(t_mlx *fdf, t_point p, int z)
 	cte2 = 0.5;
 
 	z *= fdf->altitude;
+	fdf->zoom = ft_max(fdf->zoom, 1);
 	//p.x = fdf->xoffset + (p.x * fdf->zoom);
 	p.x = (p.x * fdf->zoom);
 	p.y = (p.y * fdf->zoom);
@@ -53,7 +54,7 @@ void		put_borders(t_mlx *fdf)
 	fdf->is_border = 1;
 	i = DRAW_W - 1;
 	while (++i < WIN_W)
-		put_line(fdf, (t_point){i, WIN_H - 1}, (t_point){i, 0}, 0);
+		put_line(fdf, (t_points){(t_point){i, WIN_H - 1}, (t_point){i, 0}}, 0, PURPLE4);
 	fdf->is_border = 0;
 }
 
@@ -65,7 +66,6 @@ void		draw(t_mlx *fdf)
 	t_point p2;
 
 	j = -1;
-	ft_printf("altitude: %d\n", fdf->altitude);
 	while (++j < fdf->map->y && !(i = 0))
 		while (i < fdf->map->x)
 		{
@@ -73,13 +73,14 @@ void		draw(t_mlx *fdf)
 			p2 = (t_point){i == fdf->map->x - 1 ? i : i + 1, j};
 			p1 = fdf->function(fdf, p1, fdf->map->board[p1.y][p1.x]);
 			p2 = fdf->function(fdf, p2, fdf->map->board[p2.y][p2.x]);
-			put_line(fdf, p1, p2, 1);
+			put_line(fdf, (t_points){p1, p2}, 1, fdf->color);
 			p2 = (t_point){i, j == fdf->map->y - 1 ? j : j + 1};
 			p2 = fdf->function(fdf, p2, fdf->map->board[p2.y][p2.x]);
-			put_line(fdf, p1, p2, 1);
+			put_line(fdf, (t_points){p1, p2}, 1,fdf->color);
 			i++;
 		}
 	put_borders(fdf);
+
 }
 void	print_map(t_map *map)
 {
@@ -125,6 +126,8 @@ t_mlx	*init(int fd)
 	fdf->altitude = 1;
 	fdf->iso = 0;
 	fdf->function = isometricalize;
+	fdf->color = (int[4]){RED1, YELLOW, GREEN3,
+			BLUE_VIOLET}[ft_max((unsigned int)(&fdf->mlx)/200 % 4, 0)];
 	return (fdf);
 }
 
