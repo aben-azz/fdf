@@ -6,7 +6,7 @@
 /*   By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/03 09:25:27 by aben-azz          #+#    #+#             */
-/*   Updated: 2019/02/24 01:50:35 by aben-azz         ###   ########.fr       */
+/*   Updated: 2019/03/07 04:52:13 by aben-azz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <math.h>
+# include <fcntl.h>
+# define WIN_WIDTH 2500
+# define WIN_HEIGHT 1500
+# define DRAW_WIDTH 2000
+# define DRAW_HEIGHT 1300
 # define KPRESS 2
 # define KCLICK	3
 # define MCLICK	4
@@ -31,54 +36,52 @@
 # define SHOW_LIVE_MOUSE 0
 # define SHOW_LIVE_KEY 0
 
+typedef struct		s_map
+{
+	int				**board;
+	int				x;
+	int				y;
+}					t_map;
+
+typedef struct		s_image
+{
+	void		*ptr;
+	char		*data;
+	int			bpp;
+	int			sizeline;
+	int			endian;
+}					t_image;
 
 typedef struct	s_point
 {
 	int				x;
 	int				y;
-	int				z;
-
 }				t_point;
 typedef struct	s_mlx
 {
-	void			*i;
-	void			*w;
-
+	void			*mlx;
+	void			*win;
+	t_image			*img;
+	t_map			*map;
 }				t_mlx;
-typedef struct	s_fdf
-{
-	t_mlx			m;
-	int				r;
-	int				g;
-	int				b;
-
-}				t_fdf;
-
-typedef struct	s_key
-{
-	int				key;
-	int				(*function)(t_mlx m);
-
-}				t_key;
-int				p(t_mlx m, t_point i, int color);
-int				string(t_mlx m, t_point i, int color, char *string);
-void			ligne(t_mlx m, t_point o, t_point f, int color);
-void			circle_points(t_mlx m, t_point c, t_point o, int color);
-void			circle_midpoint(t_mlx m, t_point c, int radius, int color);
+int				check_line(char *str, int fd);
+int				create_list(int fd, t_list **begin);
+int				*create_row(char *str, int fd);
+void			end(char *str, int fd);
+t_map			*create_map(int fd);
 int				evt_live_mouse_clicked(int x, int y, int z, t_mlx *m);
 int				evt_live_key_pressed(int key, t_mlx *m);
 int				evt_live_key_clicked(int key, t_mlx *m);
 int				evt_live_mouse_move(int x, int y, t_mlx *m);
 int				evt_live_mouse_pressed(int x, int y, int z, t_mlx *m);
 int				fdf(void);
-int				key_up(t_mlx m);
-int				key_down(t_mlx m);
-int				key_left(t_mlx m);
-int				key_right(t_mlx m);
-int				key_esc(t_mlx m);
-int				clear(t_mlx m);
 int				menu(t_mlx m);
-t_point			*rotate(t_point a, t_point b, double angle);
-int				rect(t_mlx m, t_point from, t_point l, int color);
+void			draw(t_mlx *m);
 int				rgb2dec(int red, int green, int blue);
+int				put_pixel_img(t_mlx *fdf, t_point p);
+void			create_image(t_mlx *fdf);
+void			process(t_mlx *fdf);
+void			put_hor(t_mlx *fdf, t_point p1, t_point p2, t_point d);
+void			put_ver(t_mlx *fdf, t_point p1, t_point p2, t_point d);
+void			put_line(t_mlx *fdf, t_point p1, t_point p2);
 #endif

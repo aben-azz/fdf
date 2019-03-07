@@ -6,95 +6,103 @@
 /*   By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/06 08:57:11 by aben-azz          #+#    #+#             */
-/*   Updated: 2019/02/24 01:40:39 by aben-azz         ###   ########.fr       */
+/*   Updated: 2019/03/07 05:20:44 by aben-azz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int		p(t_mlx m, t_point i, int color)
+int		menu(t_mlx m)
 {
-	mlx_pixel_put(m.i, m.w, i.x, i.y, color);
+	(void)m;
+	return (0);
+}
+
+int				put_pixel_img(t_mlx *fdf, t_point p)
+{
+	int offset;
+	int color;
+
+	offset = ((p.x + p.y * WIN_WIDTH) * fdf->img->bpp);
+	color = mlx_get_color_value(fdf->mlx, RED1);
+	if ((p.x < DRAW_WIDTH && p.x > 0 && p.y < DRAW_HEIGHT && p.y > 0))
+		*(int *)(fdf->img->data + offset) = color;
 	return (1);
 }
 
-int		rgb2dec(int red, int green, int blue)
+void		create_image(t_mlx *fdf)
 {
-	return ((red << 16) + (green << 8) + (blue));
+
+	if (!(fdf->img = (t_image *)malloc(sizeof(t_image))))
+		exit(1);
+	fdf->img->ptr = mlx_new_image(fdf->mlx, WIN_WIDTH, WIN_HEIGHT);
+	if (!(fdf->img->ptr))
+		exit(1);
+	fdf->img->data = mlx_get_data_addr(fdf->img->ptr,
+			&fdf->img->bpp, &fdf->img->sizeline, &fdf->img->endian);
+	fdf->img->bpp /= 8;
 }
 
-int		string(t_mlx m, t_point i, int color, char *string)
+void			process(t_mlx *fdf)
 {
-	mlx_string_put(m.i, m.w, i.x, i.y, color, string);
-	return (1);
+
+	mlx_clear_window(fdf->mlx, fdf->win);
+	if (fdf->img)
+		mlx_destroy_image(fdf->mlx, fdf->img->ptr);
+	create_image(fdf);
+	draw(fdf);
+	mlx_put_image_to_window(fdf->mlx, fdf->win, fdf->img->ptr, 0, 0);
 }
 
-void	ligne(t_mlx m, t_point o, t_point f, int color)
+void		put_hor(t_mlx *fdf, t_point p1, t_point p2, t_point d)
 {
-	int		i;
-	t_point	inc;
+	int		j;
 	int		var;
+	t_point i;
+	t_point curr;
 
-	f = (t_point){.x = f.x - o.x, .y =f.y - o.y};
-	inc = (t_point){.x = (f.x > 0) ? 1 : -1, .y = (f.y > 0) ? 1 : -1};
-	f = (t_point){.x = abs(f.x), .y = abs(f.y)};
-	p(m, o, color) && (i = 1);
-	var = ft_round((f.x > f.y ? f.x : f.y) / 2, 0);
-	if (f.x > f.y)
-		while (i++ <= f.x && (o.x += inc.x) && (var += f.y))
-		{
-			(var >= f.x) && (o.y += inc.y);
-			(var >= f.x) && (var -= f.x);
-			p(m, o, color);
-		}
-	else
-		while (i++ <= f.y && (o.y += inc.y) && (var += f.x))
-		{
-			(var >= f.y) && (o.x += inc.x);
-			(var >= f.y) && (var -= f.y);
-			p(m, o, color);
-		}
-}
-
-void	circle_points(t_mlx m, t_point c, t_point o, int color)
-{
-	(o.x == 0) && p(m, (t_point){.x = c.x, .y = c.y + o.y}, color);
-	(o.x == 0) && p(m, (t_point){.x = c.x, .y = c.y - o.y }, color);
-	(o.x == 0) && p(m, (t_point){.x = c.x + o.y, .y = c.y }, color);
-	(o.x == 0) && p(m, (t_point){.x = c.x - o.y, .y = c.y }, color);
-	(o.x == o.y) && p(m, (t_point){.x = c.x + o.x, .y = c.y + o.y }, color);
-	(o.x == o.y) && p(m, (t_point){.x = c.x - o.x, .y = c.y + o.y }, color);
-	(o.x == o.y) && p(m, (t_point){.x = c.x + o.x, .y = c.y - o.y }, color);
-	(o.x == o.y) && p(m, (t_point){.x = c.x - o.x, .y = c.y - o.y }, color);
-	(o.x < o.y) && p(m, (t_point){.x = c.x + o.x, .y = c.y + o.y }, color);
-	(o.x < o.y) && p(m, (t_point){.x = c.x - o.x, .y = c.y + o.y }, color);
-	(o.x < o.y) && p(m, (t_point){.x = c.x + o.x, .y = c.y - o.y }, color);
-	(o.x < o.y) && p(m, (t_point){.x = c.x - o.x, .y = c.y - o.y }, color);
-	(o.x < o.y) && p(m, (t_point){.x = c.x + o.y, .y = c.y + o.x }, color);
-	(o.x < o.y) && p(m, (t_point){.x = c.x - o.y, .y = c.y + o.x }, color);
-	(o.x < o.y) && p(m, (t_point){.x = c.x + o.y, .y = c.y - o.x }, color);
-	(o.x < o.y) && p(m, (t_point){.x = c.x - o.y, .y = c.y - o.x }, color);
-}
-
-void	circle_midpoint(t_mlx m, t_point c, int radius, int color)
-{
-	t_point	o;
-	int		p;
-
-	o.x = 0;
-	o.y = radius;
-	p = (5 - radius * 4) / 4;
-	circle_points(m, c, o, color);
-	while (o.x < o.y)
+	curr = (t_point){p1.x, p1.y};
+	i = (t_point){p2.x - p1.x > 0 ? 1 : -1, p2.y - p1.y > 0 ? 1 : -1};
+	j = 1;
+	var = (d.x > d.y ? d.x : d.y) / 2;
+	while (j++ <= d.x && (var += d.y))
 	{
-		o.x++;
-		if (p < 0)
-			p += 2 * o.x + 1;
-		else
-		{
-			o.y--;
-			p += 2 * (o.x - o.y) + 1;
-		}
-		circle_points(m, c, o, color);
+		curr.x += i.x;
+		(var >= d.x) && (curr.y += i.y);
+		(var >= d.x) && (var -= d.x);
+		(put_pixel_img(fdf, curr));
 	}
+}
+
+void		put_ver(t_mlx *fdf, t_point p1, t_point p2, t_point d)
+{
+	int		j;
+	int		var;
+	t_point i;
+	t_point curr;
+
+	curr = (t_point){p1.x, p1.y};
+	i = (t_point){p2.x - p1.x > 0 ? 1 : -1, p2.y - p1.y > 0 ? 1 : -1};
+	j = 1;
+	var = (d.x > d.y ? d.x : d.y) / 2;
+	while (j++ <= d.y && (var += d.x))
+	{
+		curr.y += i.y;
+		(var >= d.y) && (curr.x += i.x);
+		(var >= d.y) && (var -= d.y);
+		(put_pixel_img(fdf, curr));
+	}
+}
+
+void			put_line(t_mlx *fdf, t_point p1, t_point p2)
+{
+	t_point d;
+
+	d = (t_point){p2.x - p1.x, p2.y - p1.y};
+	d = (t_point){abs(d.x), abs(d.y)};
+	(put_pixel_img(fdf, p1));
+	if (d.x > d.y)
+		put_hor(fdf, p1, p2, d);
+	else
+		put_ver(fdf, p1, p2, d);
 }

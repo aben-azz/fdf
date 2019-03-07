@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   read.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: midrissi <midrissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/20 15:51:18 by aben-azz          #+#    #+#             */
-/*   Updated: 2019/02/24 02:02:37 by aben-azz         ###   ########.fr       */
+/*   Created: 2019/02/15 04:12:09 by midrissi          #+#    #+#             */
+/*   Updated: 2019/03/07 05:10:41 by aben-azz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static	int		check_line(char *str, int fd)
+int		check_line(char *str, int fd)
 {
 	char	**words;
 	int		i;
@@ -23,8 +23,8 @@ static	int		check_line(char *str, int fd)
 		close(fd);
 		exit(1);
 	}
-	j = 0;
-	while (words[j])
+	j = -1;
+	while (words[++j])
 	{
 		if (!(i = 0) && words[j][i] == '-')
 			i++;
@@ -32,16 +32,16 @@ static	int		check_line(char *str, int fd)
 			i++;
 		if (words[j][i])
 			return (0);
-		j++;
 	}
-	while (*words)
-		ft_memdel((void**)words);
-	ft_memdel((void**)words);
+	i = 0;
+	while (words[i])
+		free(words[i++]);
+	free(words[i]);
 	free(words);
 	return (j);
 }
 
-static	int		create_list(int fd, t_list **begin)
+int		create_list(int fd, t_list **begin)
 {
 	char		*str;
 	int			ret;
@@ -51,7 +51,7 @@ static	int		create_list(int fd, t_list **begin)
 
 	words = -1;
 	lines = 0;
-	while ((ret = get_next_line(fd, &str)) > 0)
+	while ((ret = get_next_line(fd, &str, '\n')) > 0)
 	{
 		if (words == -1)
 			words = check_line(str, fd);
@@ -69,7 +69,7 @@ static	int		create_list(int fd, t_list **begin)
 	return (lines);
 }
 
-static	int		*create_row(char *str, int fd)
+int		*create_row(char *str, int fd)
 {
 	char	**words;
 	int		*row;
@@ -87,31 +87,35 @@ static	int		*create_row(char *str, int fd)
 		row[j] = ft_atoi(words[j]);
 		j++;
 	}
-	while (*words)
-		ft_memdel((void**)words);
-	ft_memdel((void**)words);
+	j = 0;
+	while (words[j])
+		free(words[j++]);
+	free(words[j]);
 	free(words);
 	return (row);
 }
 
-t_map	*create_map(int fd)
+void		end(char *str, int fd)
 {
-	t_list	*list;
-	t_list	*begin;
-	char	*str;
-	int		lines;
-	t_map	*map;
+	ft_putendl_fd(str, 2);
+	close(fd);
+	exit(1);
+}
+
+t_map			*create_map(int fd)
+{
+	t_list		*list;
+	t_list		*begin;
+	char		*str;
+	int			lines;
+	t_map		*map;
 
 	begin = NULL;
 	lines = create_list(fd, &begin);
 	map = (t_map *)malloc(sizeof(t_map));
 	map ? map->board = (int **)malloc(sizeof(int *) * lines) : 0;
-	if (!lines || !map || !(map->board))
-	{
-		close(fd);
-		exit(1);
-	}
-	list = begin;
+	if (!(list = begin) || !lines || !map || !(map->board))
+		end("map error", fd);
 	map->x = ft_count_words((char *)list->content, ' ');
 	map->y = 0;
 	while (map->y < lines)
@@ -120,6 +124,7 @@ t_map	*create_map(int fd)
 		map->board[(map->y)++] = create_row(str, fd);
 		list = list->next;
 	}
+
 	ft_lstdestroy(&begin);
 	return (map);
 }

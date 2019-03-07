@@ -6,7 +6,7 @@
 #    By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/03 09:24:41 by aben-azz          #+#    #+#              #
-#    Updated: 2019/02/15 21:28:54 by aben-azz         ###   ########.fr        #
+#    Updated: 2019/03/07 05:00:48 by aben-azz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ NAME = fdf
 
 cc = gcc
 C_FLAGS = -Wall -Wextra -Werror -g
-FRAM = -L mlx -I mlx -lmlx -framework OpenGL -framework AppKit -g
+FRAM = -L ./mlx -lmlx -framework OpenGL -framework AppKit
 # FRAM = -framework OpenGL -framework AppKit minilibx/libmlx.a
 
 OBJ_PATH = ./obj/
@@ -46,7 +46,7 @@ LFT_PATH = ./libft/
 INC_PATH = ./
 SRC_PATH = ./src/
 
-SRC_NAME = fdf.c main.c events.c draw.c keys_one.c transformation.c
+SRC_NAME = fdf.c main.c events.c draw.c read.c keys_one.c transformation.c
 OBJ_NAME = $(SRC_NAME:.c=.o)
 INC_NAME = fdf.h
 
