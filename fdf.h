@@ -6,7 +6,7 @@
 /*   By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/03 09:25:27 by aben-azz          #+#    #+#             */
-/*   Updated: 2019/03/13 09:44:41 by aben-azz         ###   ########.fr       */
+/*   Updated: 2019/03/13 11:02:03 by aben-azz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,9 @@ typedef struct	s_mlx
 	int				color;
 	int				is_pressed;
 	int				is_ok;
+	int				angle_x;
+	int				angle_y;
+	int				angle_z;
 }				t_mlx;
 int				check_line(char *str, int fd);
 int				create_list(int fd, t_list **begin);

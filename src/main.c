@@ -6,28 +6,63 @@
 /*   By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/08 08:51:22 by aben-azz          #+#    #+#             */
-/*   Updated: 2019/03/07 08:54:25 by aben-azz         ###   ########.fr       */
+/*   Updated: 2019/03/13 11:54:59 by aben-azz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include <stdio.h>
+//
+// t_point		rasterise(t_mlx *fdf, t_point p)
+// {
+// 	double cte;
+// 	double cte2;
+// 	t_point p2 = p;
+// 	int z;
+// 	int *other;
+//
+// 	z = fdf->map->board[p.y][p.x] * fdf->altitude;
+// 	other = (int[4]){fdf->map->board[p2.y][p2.x - 1] * fdf->altitude,
+// 		fdf->map->board[ft_max(p2.y - 1, 0)][p2.x] * fdf->altitude};
+// 	cte = 0.5;
+// 	cte2 = 0.5;
+// 	fdf->zoom = ft_max(fdf->zoom, 1);
+// 	p.x = (p.x * fdf->zoom);
+// 	p.y = (p.y * fdf->zoom);
+// 	p.x = (double[2]){p.x + cte * z, cte * p.x - cte2 * p.y}[fdf->iso];
+// 	p.y = (double[2]){p.y + (cte / 2.0) * z,
+// 		-z + (cte / 2.0) * p.x + (cte2 / 2.0) * p.y}[fdf->iso];
+// 	if ((abs(z) > 0 || (abs(other[0]) > 0)) && p2.x)
+// 		fdf->color = PURPLE4;
+// 	else
+// 		fdf->color = RED1;
+// 	return (p);
+// }
 
-t_point		rasterise(t_mlx *fdf, t_point p, int z)
+t_point		rasterise(t_mlx *fdf, t_point p, int x)
 {
-	double cte;
-	double cte2;
+	double	cte;
+	double	cte2;
+	t_point	p2;
+	int		z_c[2];
+	int		*alt;
 
-	(void)cte2;
+	p2 = p;
+	z_c[0] = fdf->map->board[p.y][p.x] * fdf->altitude;
+	alt = (int[2]){fdf->map->board[p2.y][p2.x - 1] * fdf->altitude,
+			fdf->map->board[ft_max(p2.y - 1, 0)][p2.x] * fdf->altitude};
 	cte = 0.5;
 	cte2 = 0.5;
-	z *= fdf->altitude;
 	fdf->zoom = ft_max(fdf->zoom, 1);
 	p.x = (p.x * fdf->zoom);
 	p.y = (p.y * fdf->zoom);
-	p.x = (double[2]){p.x + cte * z, cte * p.x - cte2 * p.y}[fdf->iso];
-	p.y = (double[2]){p.y + (cte / 2.0) * z,
-		-z + (cte / 2.0) * p.x + (cte2 / 2.0) * p.y}[fdf->iso];
+	p.x = (double[2]){p.x + cte * z_c[0], cte * p.x - cte2 * p.y}[fdf->iso];
+	p.y = (double[2]){p.y + (cte / 2.0) * z_c[0],
+		-z_c[0] + (cte / 2.0) * p.x + (cte2 / 2.0) * p.y}[fdf->iso];
+	if (abs(z_c[0]) || (((x && abs(alt[0])) && p2.x) || (!x && abs(alt[1]))))
+		fdf->color = PURPLE4;
+	else
+		fdf->color = RED1;
 	return (p);
 }
 
@@ -48,23 +83,23 @@ void		draw(t_mlx *fdf)
 	int		j;
 	t_point p1;
 	t_point p2;
-
 	j = -1;
 	while (++j < fdf->map->y && !(i = 0))
 		while (i < fdf->map->x)
 		{
 			p1 = (t_point){i, j};
 			p2 = (t_point){i == fdf->map->x - 1 ? i : i + 1, j};
-			p1 = rasterise(fdf, p1, fdf->map->board[p1.y][p1.x]);
-			p2 = rasterise(fdf, p2, fdf->map->board[p2.y][p2.x]);
-			put_line(fdf, (t_points){p1, p2}, 1, fdf->color);
+			p1 = rasterise(fdf, p1, 1);
+			p2 = rasterise(fdf, p2, 1);
+				put_line(fdf, (t_points){p1, p2}, 1, fdf->color);
 			p2 = (t_point){i, j == fdf->map->y - 1 ? j : j + 1};
-			p2 = rasterise(fdf, p2, fdf->map->board[p2.y][p2.x]);
-			put_line(fdf, (t_points){p1, p2}, 1,fdf->color);
+			p2 = rasterise(fdf, p2, 0);
+				put_line(fdf, (t_points){p1, p2}, 1, fdf->color);
 			i++;
 		}
 	put_borders(fdf);
 }
+
 void	print_map(t_map *map)
 {
 	int i;
@@ -105,21 +140,24 @@ t_mlx	*init(int fd)
 	fdf->zoom = 100;
 	fdf->xoffset = 500;
 	fdf->yoffset = 400;
+	fdf->altitude = 1;
 	fdf->is_border = 0;
 	fdf->is_shift = 0;
-	fdf->altitude = 1;
 	fdf->iso = 1;
 	fdf->is_ok = 0;
-	fdf->color = (int[4]){RED1, YELLOW, GREEN3,
-			BLUE_VIOLET}[ft_max((unsigned int)(&fdf->mlx)/200 % 4, 0)];
+	fdf->color = (int[4]){RED1, YELLOW, GREEN3, BLUE_VIOLET}
+		[ft_max((unsigned int)(&fdf->mlx) / 200 % 4, 0)];
 	fdf->is_pressed = 0;
+	fdf->angle_x = 0;
+	fdf->angle_y = 0;
+	fdf->angle_z = 0;
 	return (fdf);
 }
 
 int				main(int argc, char **argv)
 {
 	int		fd;
-	t_mlx *m;
+	t_mlx	*m;
 
 	if (argc != 2)
 	{

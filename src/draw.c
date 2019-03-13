@@ -6,7 +6,7 @@
 /*   By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/06 08:57:11 by aben-azz          #+#    #+#             */
-/*   Updated: 2019/03/13 08:13:30 by aben-azz         ###   ########.fr       */
+/*   Updated: 2019/03/13 11:04:42 by aben-azz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void		put_legend(t_mlx *fdf)
 	i = 10;
 	mlx_string_put(fdf->mlx, fdf->win, DRAW_W + 10, i += 100, WHITE,
 	"(Lshift/Rshift) + scroll  - change altitude");
+	mlx_string_put(fdf->mlx, fdf->win, DRAW_W + 10, i += 100, WHITE,
+	"(Lctrl/Rctrl) + scroll  - rotate");
 	mlx_string_put(fdf->mlx, fdf->win, DRAW_W + 10, i += 100, WHITE,
 	"scroll                    - zoom");
 	mlx_string_put(fdf->mlx, fdf->win, DRAW_W + 10, i += 100, WHITE,
