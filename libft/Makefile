@@ -6,7 +6,7 @@
 #    By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/13 13:11:49 by aben-azz          #+#    #+#              #
-#    Updated: 2019/03/07 04:51:35 by aben-azz         ###   ########.fr        #
+#    Updated: 2019/03/13 12:47:09 by aben-azz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ ft_strncmp.c ft_strncpy.c ft_strnequ.c ft_strnew.c ft_strnstr.c ft_strrchr.c \
 ft_putnbr.c ft_isalpha.c ft_tolower.c get_next_line.c ft_repeat_char.c \
 ft_utoa_base.c ft_intlen_base.c ft_min.c ft_max.c ft_printf.c geters.c \
 handle_numbers.c handlers.c ft_lstrev.c ft_lstdestroy.c ft_count_words.c \
-ft_itoa_base.c
+ft_itoa_base.c rgb2dec.c
 
 _END			=	\x1b[0m
 _BOLD			=	\x1b[1m

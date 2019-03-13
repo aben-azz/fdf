@@ -6,7 +6,7 @@
 #    By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/03 09:24:41 by aben-azz          #+#    #+#              #
-#    Updated: 2019/03/13 12:00:17 by aben-azz         ###   ########.fr        #
+#    Updated: 2019/03/13 12:54:03 by aben-azz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,7 @@ LFT_PATH = ./libft/
 INC_PATH = ./
 SRC_PATH = ./src/
 
-SRC_NAME = fdf.c main.c events.c draw.c read.c keys_one.c transformation.c
+SRC_NAME = main.c events.c draw.c read.c
 OBJ_NAME = $(SRC_NAME:.c=.o)
 INC_NAME = fdf.h
 

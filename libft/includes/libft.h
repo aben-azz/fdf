@@ -6,7 +6,7 @@
 /*   By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/13 11:36:13 by aben-azz          #+#    #+#             */
-/*   Updated: 2019/03/07 04:48:40 by aben-azz         ###   ########.fr       */
+/*   Updated: 2019/03/13 12:46:56 by aben-azz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,5 +159,5 @@ t_fmt			*get_options(char *s, va_list ap);
 char			*get_s(t_fmt *fmt, va_list ap);
 int				ft_printf(const char *format, ...);
 int				ft_dprintf(int fd, const char *format, ...);
-
+unsigned long	rgb2dec(int r, int g, int b);
 #endif

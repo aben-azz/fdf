@@ -6,13 +6,13 @@
 /*   By: midrissi <midrissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 04:12:09 by midrissi          #+#    #+#             */
-/*   Updated: 2019/03/13 12:00:12 by aben-azz         ###   ########.fr       */
+/*   Updated: 2019/03/13 12:51:47 by aben-azz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int		check_line(char *str, int fd)
+static int		check_line(char *str, int fd)
 {
 	char	**words;
 	int		i;
@@ -41,7 +41,7 @@ int		check_line(char *str, int fd)
 	return (j);
 }
 
-int		create_list(int fd, t_list **begin)
+static int		create_list(int fd, t_list **begin)
 {
 	char		*str;
 	int			ret;
@@ -69,7 +69,7 @@ int		create_list(int fd, t_list **begin)
 	return (lines);
 }
 
-int		*create_row(char *str, int fd)
+static int		*create_row(char *str, int fd)
 {
 	char	**words;
 	int		*row;
@@ -95,7 +95,7 @@ int		*create_row(char *str, int fd)
 	return (row);
 }
 
-void		end(char *str, int fd)
+static void		end(char *str, int fd)
 {
 	ft_putendl_fd(str, 2);
 	close(fd);
