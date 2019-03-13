@@ -6,7 +6,7 @@
 /*   By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/06 08:57:11 by aben-azz          #+#    #+#             */
-/*   Updated: 2019/03/13 16:25:37 by aben-azz         ###   ########.fr       */
+/*   Updated: 2019/03/13 16:55:06 by aben-azz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,29 +93,29 @@ void			put_line(t_mlx *fdf, t_point p1, t_point p2, int offset)
 	}
 }
 
-void			put_rainbow(t_mlx *fdf, int x, int y, int focus)
+void			put_rainbow(t_mlx *fdf, int x, int y, int f)
 {
 	int i;
 	int color[3];
 
 	i = 0;
-	color[0] = 255;
-	color[1] = 0;
+	color[0] = 0;
+	color[1] = 255;
 	color[2] = 0;
 	while (i++ < 499)
 	{
-		(color[1] == 0 && color[0] == 255) && (color[2] += 5);
-		(color[1] == 255 && color[0] == 0) && (color[2] -= 5);
 		(color[1] == 0 && color[2] == 255) && (color[0] -= 5);
 		(color[1] == 255 && color[2] == 0) && (color[0] += 5);
+		(color[1] == 0 && color[0] == 255) && (color[2] += 5);
+		(color[1] == 255 && color[0] == 0) && (color[2] -= 5);
 		(color[0] == 0 && color[2] == 255) && (color[1] += 5);
 		(color[0] == 255 && color[2] == 0) && (color[1] -= 5);
-		if (i == WIN_W - x && ((y >= WIN_H - 20 && y <= WIN_H - 5) || !focus))
-			fdf->clr = rgb2dec(color[0], color[2], color[1]);
 		fdf->is_border = 1;
 		put_line(fdf, (t_point){DRAW_W + i, WIN_H - 25,
-			rgb2dec(color[0], color[2], color[1])},
+			rgb2dec(color[0], color[1], color[2])},
 			(t_point){DRAW_W + i, WIN_H - 5, 0}, 0);
 		fdf->is_border = 0;
+		if (499 - i == WIN_W - x && ((y >= WIN_H - 20 && y <= WIN_H - 5) || !f))
+			fdf->clr = rgb2dec(color[0], color[1], color[2]);
 	}
 }

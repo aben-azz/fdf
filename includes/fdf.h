@@ -6,7 +6,7 @@
 /*   By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/03 09:25:27 by aben-azz          #+#    #+#             */
-/*   Updated: 2019/03/13 16:32:06 by aben-azz         ###   ########.fr       */
+/*   Updated: 2019/03/13 16:53:05 by aben-azz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ int				evt_live_mouse_pressed(int x, int y, int z, t_mlx *m);
 int				evt_live_key_released(int key, t_mlx *m);
 int				fdf(void);
 void			draw(t_mlx *m);
-unsigned long	rgb2dec(int red, int green, int blue);
 void			process(t_mlx *fdf);
 void			put_line(t_mlx *fdf, t_point p1, t_point p2, int offset);
 void			put_rainbow(t_mlx *fdf, int x, int y, int focus);
