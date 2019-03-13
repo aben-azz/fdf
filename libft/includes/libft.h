@@ -6,7 +6,7 @@
 /*   By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/13 11:36:13 by aben-azz          #+#    #+#             */
-/*   Updated: 2019/03/13 12:46:56 by aben-azz         ###   ########.fr       */
+/*   Updated: 2019/03/13 16:01:55 by aben-azz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,8 +131,8 @@ char			*ft_itoa_base(intmax_t n, int base, int islower);
 char			*ft_utoa_base(uintmax_t nb, int base, int uppercase);
 long long		ft_pow(int base, int i);
 long double		ft_round(long double fl, long precision);
-int				ft_min(int a, int b);
-int				ft_max(int a, int b);
+int				min(int a, int b);
+int				max(int a, int b);
 
 t_list			*ft_lstnew(void *content, size_t content_size);
 void			ft_lstdelone(t_list **alst, void (*del)(void *, size_t));
@@ -160,4 +160,6 @@ char			*get_s(t_fmt *fmt, va_list ap);
 int				ft_printf(const char *format, ...);
 int				ft_dprintf(int fd, const char *format, ...);
 unsigned long	rgb2dec(int r, int g, int b);
+double			ft_percent(int start, int end, int curr);
+int				ft_get_color_from_percent(int color1, double percentage);
 #endif

@@ -6,11 +6,11 @@
 /*   By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/08 08:51:22 by aben-azz          #+#    #+#             */
-/*   Updated: 2019/03/13 14:15:12 by aben-azz         ###   ########.fr       */
+/*   Updated: 2019/03/13 16:25:56 by aben-azz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "includes/fdf.h"
 
 static inline t_point	rasterise(t_mlx *fdf, t_point p)
 {
@@ -23,7 +23,7 @@ static inline t_point	rasterise(t_mlx *fdf, t_point p)
 	z = fdf->map->board[p.y][p.x] * fdf->altitude;
 	cte = 0.5;
 	cte2 = 0.5;
-	fdf->zoom = ft_max(fdf->zoom, 1);
+	fdf->zoom = max(fdf->zoom, 1);
 	p.x = (p.x * fdf->zoom);
 	p.y = (p.y * fdf->zoom);
 	p.x = (double[2]){p.x + cte * z, cte * p.x - cte2 * p.y}[fdf->iso];
@@ -73,7 +73,7 @@ static inline void		init_variables(t_mlx *fdf)
 	fdf->iso = 1;
 	fdf->is_ok = 0;
 	fdf->clr = (int[5]){RED1, YELLOW, GREEN3, BLUE_VIOLET, 0xff00c3}
-		[ft_max((unsigned int)(&fdf->mlx) / 200 % 5, 0)];
+		[max((unsigned int)(&fdf->mlx) / 200 % 5, 0)];
 	fdf->is_pressed = 0;
 }
 

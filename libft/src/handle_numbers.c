@@ -6,7 +6,7 @@
 /*   By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 09:23:45 by aben-azz          #+#    #+#             */
-/*   Updated: 2019/03/02 22:56:32 by aben-azz         ###   ########.fr       */
+/*   Updated: 2019/03/13 16:27:23 by aben-azz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int					print_numbers(int fd, t_fmt *fmt, char *str, int len)
 		ft_repeat_char(fd, '0', fmt->prec);
 		ft_putstr_fd(str, fd);
 	}
-	len = ft_max(len, 0);
+	len = max(len, 0);
 	return (ret + ft_strlen(str) + len + fmt->prec + (fmt->signe != 0));
 }
 

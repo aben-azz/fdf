@@ -6,11 +6,11 @@
 /*   By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/06 08:58:10 by aben-azz          #+#    #+#             */
-/*   Updated: 2019/03/13 12:51:44 by aben-azz         ###   ########.fr       */
+/*   Updated: 2019/03/13 16:25:35 by aben-azz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "includes/fdf.h"
 
 int		evt_live_mouse_move(int x, int y, t_mlx *m)
 {
