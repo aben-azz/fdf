@@ -6,7 +6,7 @@
 /*   By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/06 08:58:10 by aben-azz          #+#    #+#             */
-/*   Updated: 2019/03/07 08:55:24 by aben-azz         ###   ########.fr       */
+/*   Updated: 2019/03/13 10:01:17 by aben-azz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,13 @@ int		evt_live_key_clicked(int key, t_mlx *m)
 	(void)m;
 	if (53 == key)
 		exit(0);
+	else if (49 == key)
+	{
+		m->zoom = 100;
+		m->xoffset = 500;
+		m->yoffset = 400;
+		m->altitude = 1;
+	}
 	return (0);
 }
 
@@ -48,22 +55,30 @@ int		evt_live_key_pressed(int key, t_mlx *m)
 		m->yoffset += 5;
 	else if (key == LSFT_KEY || key == RSFT_KEY)
 		m->is_shift = 1;
+	else if (49 == key)
+	{
+		m->zoom = 100;
+		m->xoffset = 500;
+		m->yoffset = 400;
+		m->altitude = 1;
+	}
 	process(m);
 	return (0);
 }
-unsigned long rgb2dec(int r, int g, int b)
+
+unsigned long	rgb2dec(int r, int g, int b)
 {
 	return ((r & 0xff) << 16) + ((g & 0xff) << 8) + (b & 0xff);
 }
+
 int		evt_live_key_released(int key, t_mlx *m)
 {
-	(void)m;
 	if (key == LSFT_KEY)
 		m->is_shift = 0;
-
 	process(m);
 	return (0);
 }
+
 void		put_rainbow(t_mlx *fdf, int x, int y, int focus)
 {
 	int i;
@@ -81,30 +96,21 @@ void		put_rainbow(t_mlx *fdf, int x, int y, int focus)
 		(color[1] == 255 && color[2] == 0) && (color[0] += 5);
 		(color[0] == 0 && color[2] == 255) && (color[1] += 5);
 		(color[0] == 255 && color[2] == 0) && (color[1] -= 5);
-		if (i == x - 2000 && ((y >= 1475 && y <= 1495) || !focus))
+		if (i == WIN_W - x && ((y >= WIN_H - 20 && y <= WIN_H - 5) || !focus))
 			fdf->color = rgb2dec(color[0], color[2], color[1]);
-
-			// circle_midpoint(*m, (t_point){.x = 300 + i, .y = 305}, 10,
-			// 	rgb2dec(color[0], color[2], color[1]));
-		// rect(*m, (t_point){300 + i, 300}, (t_point){1, 10},
-		// 	rgb2dec(color[0], color[2], color[1]));
 		fdf->is_border = 1;
-		put_line(fdf, (t_points){(t_point){2000 + i, 1475}, (t_point){2000 + i,
-			1495}}, 0, rgb2dec(color[0], color[2], color[1]));
+		put_line(fdf, (t_points){(t_point){DRAW_W + i, WIN_H - 25}, (t_point){
+			DRAW_W + i, WIN_H - 5}}, 0, rgb2dec(color[0], color[2], color[1]));
 		fdf->is_border = 0;
 	}
 }
+
 int		evt_live_mouse_clicked(int x, int y, int z, t_mlx *m)
 {
-	(void)y;
-	(void)z;
-	(void)m;
-
 	if (m->is_shift)
 	{
 		if (x == 6)
 			m->altitude++;
-
 		else if (x == 7)
 			m->altitude--;
 	}
@@ -116,7 +122,7 @@ int		evt_live_mouse_clicked(int x, int y, int z, t_mlx *m)
 			m->zoom -= 5;
 		else if (x == BUT1_KEY)
 			m->is_pressed = 1;
-		else if (x == BUT1_KEY && (y >= 1475 && y <= 1495))
+		else if (x == BUT1_KEY && (y >= WIN_H - 25 && y <= WIN_H - 5))
 			m->is_ok = 1;
 		else if (x == BUT3_KEY)
 			m->iso = !m->iso;
@@ -137,7 +143,6 @@ int		evt_live_mouse_pressed(int x, int y, int z, t_mlx *m)
 		m->zoom--;
 	else if (x == BUT1_KEY && !(m->is_ok = 0))
 		m->is_pressed = 0;
-	//process(m);
 	put_rainbow(m, y, z, 0);
 	process(m);
 	return (0);

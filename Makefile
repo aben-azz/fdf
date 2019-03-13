@@ -6,7 +6,7 @@
 #    By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/03 09:24:41 by aben-azz          #+#    #+#              #
-#    Updated: 2019/03/07 06:48:18 by aben-azz         ###   ########.fr        #
+#    Updated: 2019/03/13 09:39:27 by aben-azz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,7 +68,7 @@ $(NAME): $(LIBFT_PATH)$(LIBFT_NAME) $(OBJ)
 		@printf "$(_BOLD)$(_RED)Executable ./fdf pret \n$(_END)$(_CYAN)$(_END)"
 
 
-$(OBJ_PATH)%.o: $(SRC_PATH)%.c
+$(OBJ_PATH)%.o: $(SRC_PATH)%.c fdf.h
 		@mkdir -p $(OBJ_PATH) 2> /dev/null || true
 		@$(CC) $(C_FLAGS) $(INC) -o $@ -c $<
 		@printf "$(_BOLD)$(_PURPLE)$(MSG)$(_END) $(_CYAN)%-$(LONGEST)s\

@@ -6,7 +6,7 @@
 /*   By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/19 12:19:20 by aben-azz          #+#    #+#             */
-/*   Updated: 2019/03/05 06:54:07 by aben-azz         ###   ########.fr       */
+/*   Updated: 2019/03/13 09:47:36 by aben-azz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,6 @@ int	ft_indexof(char *string, char c)
 	i = 0;
 	while (*(string + i))
 		if (*(string + i++) == c)
-			return (i);
+			return (i - 1);
 	return (-1);
 }

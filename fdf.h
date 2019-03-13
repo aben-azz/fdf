@@ -6,7 +6,7 @@
 /*   By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/03 09:25:27 by aben-azz          #+#    #+#             */
-/*   Updated: 2019/03/07 08:54:17 by aben-azz         ###   ########.fr       */
+/*   Updated: 2019/03/13 09:44:41 by aben-azz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
 # include <stdlib.h>
 # include <math.h>
 # include <fcntl.h>
-# define WIN_W 2500
-# define WIN_H  1500
-# define DRAW_W     2000
+# define WIN_W 2000
+# define WIN_H  1000
+# define DRAW_W WIN_W - 500
 # define KPRESS 2
 # define KCLICK	3
 # define MCLICK	4
