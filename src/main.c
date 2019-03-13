@@ -6,7 +6,7 @@
 /*   By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/08 08:51:22 by aben-azz          #+#    #+#             */
-/*   Updated: 2019/03/13 11:54:59 by aben-azz         ###   ########.fr       */
+/*   Updated: 2019/03/13 11:59:36 by aben-azz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,12 @@ t_point		rasterise(t_mlx *fdf, t_point p, int x)
 	double	cte;
 	double	cte2;
 	t_point	p2;
-	int		z_c[2];
+	int		z;
 	int		*alt;
 
 	p2 = p;
-	z_c[0] = fdf->map->board[p.y][p.x] * fdf->altitude;
+	z = fdf->color;
+	z = fdf->map->board[p.y][p.x] * fdf->altitude;
 	alt = (int[2]){fdf->map->board[p2.y][p2.x - 1] * fdf->altitude,
 			fdf->map->board[ft_max(p2.y - 1, 0)][p2.x] * fdf->altitude};
 	cte = 0.5;
@@ -56,13 +57,13 @@ t_point		rasterise(t_mlx *fdf, t_point p, int x)
 	fdf->zoom = ft_max(fdf->zoom, 1);
 	p.x = (p.x * fdf->zoom);
 	p.y = (p.y * fdf->zoom);
-	p.x = (double[2]){p.x + cte * z_c[0], cte * p.x - cte2 * p.y}[fdf->iso];
-	p.y = (double[2]){p.y + (cte / 2.0) * z_c[0],
-		-z_c[0] + (cte / 2.0) * p.x + (cte2 / 2.0) * p.y}[fdf->iso];
-	if (abs(z_c[0]) || (((x && abs(alt[0])) && p2.x) || (!x && abs(alt[1]))))
-		fdf->color = PURPLE4;
+	p.x = (double[2]){p.x + cte * z, cte * p.x - cte2 * p.y}[fdf->iso];
+	p.y = (double[2]){p.y + (cte / 2.0) * z,
+		-z + (cte / 2.0) * p.x + (cte2 / 2.0) * p.y}[fdf->iso];
+	if (abs(z) || (((x && abs(alt[0])) && p2.x) || (!x && abs(alt[1]))))
+		fdf->alt = PURPLE4;
 	else
-		fdf->color = RED1;
+		fdf->alt = 0;
 	return (p);
 }
 
@@ -91,10 +92,10 @@ void		draw(t_mlx *fdf)
 			p2 = (t_point){i == fdf->map->x - 1 ? i : i + 1, j};
 			p1 = rasterise(fdf, p1, 1);
 			p2 = rasterise(fdf, p2, 1);
-				put_line(fdf, (t_points){p1, p2}, 1, fdf->color);
+			put_line(fdf, (t_points){p1, p2}, 1, fdf->alt ? fdf->alt : fdf->color);
 			p2 = (t_point){i, j == fdf->map->y - 1 ? j : j + 1};
 			p2 = rasterise(fdf, p2, 0);
-				put_line(fdf, (t_points){p1, p2}, 1, fdf->color);
+			put_line(fdf, (t_points){p1, p2}, 1, fdf->alt ? fdf->alt : fdf->color);
 			i++;
 		}
 	put_borders(fdf);
@@ -148,9 +149,7 @@ t_mlx	*init(int fd)
 	fdf->color = (int[4]){RED1, YELLOW, GREEN3, BLUE_VIOLET}
 		[ft_max((unsigned int)(&fdf->mlx) / 200 % 4, 0)];
 	fdf->is_pressed = 0;
-	fdf->angle_x = 0;
-	fdf->angle_y = 0;
-	fdf->angle_z = 0;
+	fdf->alt = 0;
 	return (fdf);
 }
 
