@@ -6,7 +6,7 @@
 /*   By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/08 08:51:22 by aben-azz          #+#    #+#             */
-/*   Updated: 2019/03/13 16:55:09 by aben-azz         ###   ########.fr       */
+/*   Updated: 2019/05/22 15:00:56 by aben-azz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,8 @@ static inline t_point	rasterise(t_mlx *fdf, t_point p)
 {
 	double	cte;
 	double	cte2;
-	t_point	p2;
 	int		z;
 
-	p2 = p;
 	z = fdf->map->board[p.y][p.x] * fdf->altitude;
 	cte = 0.5;
 	cte2 = 0.5;
@@ -72,6 +70,10 @@ static inline void		init_variables(t_mlx *fdf)
 	fdf->is_shift = 0;
 	fdf->iso = 1;
 	fdf->is_ok = 0;
+	fdf->angle_x = 0.0;
+	fdf->angle_y = 0.0;
+	fdf->angle_z = 0.0;
+	fdf->rotation_offset = (t_point){.x = 100, .y = 100};
 	fdf->clr = (int[5]){RED1, YELLOW, GREEN3, BLUE_VIOLET, 0xff00c3}
 		[max((unsigned int)(&fdf->mlx) / 200 % 5, 0)];
 	fdf->is_pressed = 0;

@@ -6,7 +6,7 @@
 /*   By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/06 08:58:10 by aben-azz          #+#    #+#             */
-/*   Updated: 2019/03/13 16:55:08 by aben-azz         ###   ########.fr       */
+/*   Updated: 2019/05/22 14:59:10 by aben-azz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,10 @@ int		evt_live_mouse_pressed(int x, int y, int z, t_mlx *m)
 	else if (x == WHEELDOWN)
 		m->zoom--;
 	else if (x == BUT1_KEY && !(m->is_ok = 0))
+	{
 		m->is_pressed = 0;
+		m->rotation_offset = (t_point){.x = x - 500, .y = y};
+	}
 	put_rainbow(m, y, z, 0);
 	process(m);
 	return (0);

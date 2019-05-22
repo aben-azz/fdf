@@ -6,7 +6,7 @@
 /*   By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/03 09:25:27 by aben-azz          #+#    #+#             */
-/*   Updated: 2019/03/13 16:53:05 by aben-azz         ###   ########.fr       */
+/*   Updated: 2019/05/22 15:02:29 by aben-azz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,10 @@ typedef struct	s_mlx
 	int				clr;
 	int				is_pressed;
 	int				is_ok;
+	float			angle_x;
+	float			angle_y;
+	float			angle_z;
+	t_point			rotation_offset;
 }				t_mlx;
 t_map			*create_map(int fd);
 int				evt_live_mouse_clicked(int x, int y, int z, t_mlx *m);
@@ -97,4 +101,5 @@ void			draw(t_mlx *m);
 void			process(t_mlx *fdf);
 void			put_line(t_mlx *fdf, t_point p1, t_point p2, int offset);
 void			put_rainbow(t_mlx *fdf, int x, int y, int focus);
+void			rotate(t_mlx *fdf, t_point *point);
 #endif
