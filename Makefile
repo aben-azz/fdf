@@ -6,7 +6,7 @@
 #    By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/03 09:24:41 by aben-azz          #+#    #+#              #
-#    Updated: 2019/04/23 08:22:37 by aben-azz         ###   ########.fr        #
+#    Updated: 2019/06/12 06:09:14 by aben-azz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ MSG				=	Compilation de FdF
 NAME = fdf
 
 cc = gcc
-C_FLAGS = -Wall -Wextra -Werror -g
+C_FLAGS = -Wall -Wextra -Werror -g -v
 FRAM = -L ./mlx -lmlx -framework OpenGL -framework AppKit
 # FRAM = -framework OpenGL -framework AppKit minilibx/libmlx.a
 

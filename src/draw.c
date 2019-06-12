@@ -6,7 +6,7 @@
 /*   By: aben-azz <aben-azz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/06 08:57:11 by aben-azz          #+#    #+#             */
-/*   Updated: 2019/05/22 15:01:46 by aben-azz         ###   ########.fr       */
+/*   Updated: 2019/06/12 06:12:46 by aben-azz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void			process(t_mlx *fdf)
 	mlx_clear_window(fdf->mlx, fdf->win);
 	if (fdf->img)
 		mlx_destroy_image(fdf->mlx, fdf->img->ptr);
+	free(fdf->img);
 	if (!(fdf->img = (t_image *)malloc(sizeof(t_image))))
 		exit(1);
 	fdf->img->ptr = mlx_new_image(fdf->mlx, WIN_W, WIN_H);
